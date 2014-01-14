@@ -1,3 +1,7 @@
+//*****************************************************************************
+// 3601 Lab 1
+// Programmers: David Pagels and Emma Callery
+//*****************************************************************************
 package umm.softwaredesign.stacklab;
 
 import java.util.List;
