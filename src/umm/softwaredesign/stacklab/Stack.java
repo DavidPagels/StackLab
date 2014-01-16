@@ -17,15 +17,12 @@ import umm.softwaredesign.stacklab.StackIF;
  * @version $Revision: 1.16 $
  */
 public class Stack<T> implements StackIF<T> {
-	private int size;
-	public ArrayList<T> stack;
+	private ArrayList<T> stack;
     /**
      * Construct an empty stack.
      */
     public Stack() {
     	stack = new ArrayList<T>();
-    	size = 0;
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -38,11 +35,9 @@ public class Stack<T> implements StackIF<T> {
      */
     public Stack(List<T> items) {
     	stack = new ArrayList<T>();
-    	size = items.size();
     	for(T item: items){
     		stack.add(item);
     	}
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -51,8 +46,7 @@ public class Stack<T> implements StackIF<T> {
      * @return the number of elements on the stack
      */
     public int size() {
-    	return size;
-        //throw new UnsupportedOperationException();
+    	return stack.size();
     }
 
     /**
@@ -61,11 +55,7 @@ public class Stack<T> implements StackIF<T> {
      * @return true if the stack is empty, false otherwise
      */
     public boolean isEmpty() {
-    	if(size == 0)
-    		return true;
-    	else
-    		return false;
-        //throw new UnsupportedOperationException();
+    	return stack.size() == 0;
     }
 
     /**
@@ -76,8 +66,6 @@ public class Stack<T> implements StackIF<T> {
      */
     public void push(T value) {
     	stack.add(value);
-    	size++;
-        //throw new UnsupportedOperationException();
     }
 
     /**
@@ -89,11 +77,9 @@ public class Stack<T> implements StackIF<T> {
      *             if the stack is empty
      */
     public T pop() {
-    	T retVal = stack.get(size - 1);
-    	stack.remove(size - 1);
-    	size--;
+    	T retVal = stack.get(stack.size() - 1); // get the value at the top of the stack
+    	stack.remove(stack.size() - 1); // remove the value at the top of the stack
     	return retVal;
-        //throw new UnsupportedOperationException();
     }
 
     /**
@@ -105,8 +91,7 @@ public class Stack<T> implements StackIF<T> {
      *             if the stack is empty
      */
     public T top() {
-    	return stack.get(size - 1);
-        //throw new UnsupportedOperationException();
+    	return stack.get(stack.size() - 1);
     }
 
     /**
@@ -118,17 +103,15 @@ public class Stack<T> implements StackIF<T> {
      *         elements
      */
     public boolean hasElements(List<T> items) {
-    	int itemsPlace = 0;
-    	for(int i = 0; i < size; i++){
-    		if(stack.get(i) == items.get(itemsPlace)){
-    			itemsPlace++;
+    	if(stack.size() != items.size()) //if items and the stack have different sizes
+    		return false;
+    	
+    	for(int i = 0; i < stack.size(); i++){
+    		if(!items.get(i).equals(stack.get(i))){ //check that the elements appear in the same order 
+    			return false;
     		}
     	}
-    	if(itemsPlace == items.size())
-    		return true;
-    	else
-    		return false;
-        //throw new UnsupportedOperationException();
+    	return true;
     }
 
     /**
@@ -141,8 +124,12 @@ public class Stack<T> implements StackIF<T> {
      */
     @Override
     public String toString() {
-    	////String retString = "Stack[";
-    	//for(int i = 0; i < size; i++)
-        throw new UnsupportedOperationException();
+    	String retString = "Stack[";
+    	for(int i = 0; i < stack.size() - 1; i++) // append elements up to the second to last onto the return string
+    		retString += stack.get(i) + ", ";
+    	if(stack.size() > 0)
+    		retString += stack.get(stack.size() - 1); // append final element with out a comma after it
+    	retString += "]";
+    	return retString;
     }
 }
